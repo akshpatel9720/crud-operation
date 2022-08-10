@@ -54,4 +54,5 @@ public class ResponseMessage
 
     public static final String EMAIL_IS_NULL_OR_PRESENT ="Email is Null or present ";
     public static final String USER_ENTITY_NULL = "User Entity is null ";
+    public static final String FAIL_MESSSAGE_UPDATE ="please enter valid id for update";
 }

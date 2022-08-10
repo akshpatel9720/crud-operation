@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class UserEntity {
@@ -17,8 +19,15 @@ public class UserEntity {
     public Integer age;
 
     private Boolean isVerified;
-    
 
+    public String gender;
+
+    public String address;
+
+
+    public Date createdDateTime;
+
+    public Date UpdateDateTime;
 
     public UserEntity() {
 
@@ -26,7 +35,18 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        return "UserEntity{" + "id=" + id + ", email='" + email + '\'' + ", password='" + password + '\'' + ", mobileno=" + mobileno + ", age=" + age + ", isVerified=" + isVerified + '}';
+        return "UserEntity{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", mobileno=" + mobileno +
+                ", age=" + age +
+                ", isVerified=" + isVerified +
+                ", gender='" + gender + '\'' +
+                ", address='" + address + '\'' +
+                ", createdDateTime=" + createdDateTime +
+                ", UpdateDateTime=" + UpdateDateTime +
+                '}';
     }
 
     public Integer getId() {
@@ -77,5 +97,35 @@ public class UserEntity {
         isVerified = verified;
     }
 
+    public String getGender() {
+        return gender;
+    }
 
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getCreatedDateTime() {
+        return createdDateTime;
+    }
+
+    public void setCreatedDateTime(Date createdDateTime) {
+        this.createdDateTime = createdDateTime;
+    }
+
+    public Date getUpdateDateTime() {
+        return UpdateDateTime;
+    }
+
+    public void setUpdateDateTime(Date updateDateTime) {
+        UpdateDateTime = updateDateTime;
+    }
 }

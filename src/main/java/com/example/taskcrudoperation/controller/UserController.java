@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -50,10 +52,9 @@ public class UserController
             logger.info("inside  update() ");
             return new ResponseEntity<>(userService.update(userEntity),HttpStatus.OK);
         }
-        catch (Exception e)
-        {
-            logger.error("error occur while update() " +e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
+        catch (Exception e) {
+            logger.error("error occur while update() " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
     @DeleteMapping("/delete")
@@ -76,6 +77,18 @@ public class UserController
         } catch (Exception e) {
             logger.error("Error occured while resetPasswordfromOldPassword {} :Reason :{}",e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<UserEntity>> search(@RequestParam("Text") String Text){
+        try {
+            logger.info("inside the search block");
+            return new ResponseEntity<>(userService.search(Text),HttpStatus.OK);
+        }
+        catch (Exception e){
+            logger.error("inside the Exception block");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
         }
     }
 }

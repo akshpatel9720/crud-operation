@@ -7,7 +7,6 @@ import com.example.taskcrudoperation.util.ResponseMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,20 +53,20 @@ public class UserServiceImpl implements UserService {
 
     public Map<String, Object> update(UserEntity userEntity) {
         Map<String, Object> map = new HashMap<>();
-        UserEntity existingUserEntity = userRepository.findById(userEntity.getId()).get();
-        if (existingUserEntity != null) {
-            existingUserEntity.setMobileno(userEntity.mobileno);
 
-            UserEntity userEntity1 = userRepository.save(existingUserEntity);
+        Optional<UserEntity> existingUserEntity = userRepository.findById(userEntity.getId());
+        if (existingUserEntity.isPresent()) {
+            existingUserEntity.get().setMobileno(userEntity.mobileno);
+            existingUserEntity.get().setGender(userEntity.gender);
+            existingUserEntity.get().setAddress(userEntity.address);
+            existingUserEntity.get().setUpdateDateTime(new Date());
+            UserEntity updateUser = userRepository.save(existingUserEntity.get());
             map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
             map.put(ResponseMessage.MESSAGE, ResponseMessage.SUCCESS_MESSAGE_UPDATE);
-            map.put(ResponseMessage.DATA, userEntity1);
-
+            map.put(ResponseMessage.DATA, updateUser);
         } else {
-            userRepository.save(userEntity);
-            map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
-            map.put(ResponseMessage.MESSAGE, ResponseMessage.SUCCESS_MESSAGE);
-
+            map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
+            map.put(ResponseMessage.MESSAGE, ResponseMessage.FAIL_MESSSAGE_UPDATE);
         }
         return map;
     }
@@ -119,4 +118,12 @@ public class UserServiceImpl implements UserService {
         }
         return map;
     }
+
+    @Override
+    public List<UserEntity> search(String Text) {
+        List<UserEntity> data=userRepository.search(Text);
+        return data;
+    }
+
+
 }

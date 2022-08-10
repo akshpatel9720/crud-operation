@@ -41,6 +41,8 @@ public class RegistrationServiceImpl implements RegistrationService {
             {
                 logger.info("email id is not present ");
                 userEntity.setVerified(false);
+                userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+                userEntity.setCreatedDateTime(new Date());
                 userRepository.save(userEntity);
                 map.put(ResponseMessage.STATUS,ResponseMessage.SUCCESS_API_CODE);
                 map.put(ResponseMessage.MESSAGE,ResponseMessage.SAVE_SUCCESSFULLY);
