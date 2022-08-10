@@ -1,22 +1,17 @@
 package com.example.taskcrudoperation.Service;
 
-import com.example.taskcrudoperation.model.User;
+import com.example.taskcrudoperation.model.UserEntity;
 
-import java.util.List;
-
-
-public interface UserService
-{
-
-   List<User> getAllUser();
-
-    User getById(int id);
-
-    String save(User user);
-
-    void update(User user);
-
-    void delete(int id);
+import java.util.Map;
 
 
+public interface UserService {
+    Map<String,Object> getAllUser(String authToken) ;
+
+    Map<String, Object> getById(int id);
+    Map<String,Object> update(UserEntity userEntity);
+
+    Map<String,Object> delete(int id);
+
+    public Map<String, Object> resetPasswordfromOldPassword(Integer id, String oldpassword, String newpassword);
 }

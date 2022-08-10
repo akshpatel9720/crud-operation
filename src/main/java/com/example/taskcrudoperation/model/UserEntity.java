@@ -6,27 +6,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class User
-{
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer id;
     public String email;
-    public  Long mobileno;
+
+    public String password;
+    public Long mobileno;
     public Integer age;
 
-    public User() {
+    private Boolean isVerified;
+    
+
+
+    public UserEntity() {
 
     }
-//hi welcome to git 
+
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email_id='" + email + '\'' +
-                ", mobileno=" + mobileno +
-                ", age=" + age +
-                '}';
+        return "UserEntity{" + "id=" + id + ", email='" + email + '\'' + ", password='" + password + '\'' + ", mobileno=" + mobileno + ", age=" + age + ", isVerified=" + isVerified + '}';
     }
 
     public Integer getId() {
@@ -60,4 +60,22 @@ public class User
     public void setAge(Integer age) {
         this.age = age;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(Boolean verified) {
+        isVerified = verified;
+    }
+
+
 }
