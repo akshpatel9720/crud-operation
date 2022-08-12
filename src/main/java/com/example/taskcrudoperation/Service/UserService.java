@@ -16,6 +16,8 @@ public interface UserService {
 
     public Map<String, Object> resetPasswordfromOldPassword(Integer id, String oldpassword, String newpassword);
 
-    List<UserEntity> search(String Text);
+    Map<String,Object> search(String Text);
+
+    List<UserEntity> listAll();
 
 }

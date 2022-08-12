@@ -2,6 +2,7 @@ package com.example.taskcrudoperation.controller;
 
 import com.example.taskcrudoperation.Service.UserService;
 import com.example.taskcrudoperation.model.UserEntity;
+import com.example.taskcrudoperation.model.UserExcelExporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +86,7 @@ public class UserController
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserEntity>> search(@RequestParam("Text") String Text){
+    public ResponseEntity<Map<String,Object>> search(@RequestParam("Text") String Text){
         try {
             logger.info("inside the search block");
             return new ResponseEntity<>(userService.search(Text),HttpStatus.OK);
@@ -90,5 +95,22 @@ public class UserController
             logger.error("inside the Exception block");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
         }
+    }
+
+    @GetMapping("export/excel")
+    public void exportToExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users.xlsx";
+        response.setHeader(headerKey, headerValue);
+
+        List<UserEntity> listUsers = userService.listAll();
+
+        UserExcelExporter excelExporter = new UserExcelExporter(listUsers);
+
+        excelExporter.export(response);
     }
 }

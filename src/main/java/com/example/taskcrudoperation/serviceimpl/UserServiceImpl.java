@@ -7,6 +7,7 @@ import com.example.taskcrudoperation.util.ResponseMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -90,39 +91,61 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> userEntity = userRepository.findById(id);
         Map<String, Object> map = new HashMap<>();
         try {
-            if (userEntity!=null)
-            {
+            if (userEntity != null) {
                 UserEntity user = userEntity.get();
                 BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
                 boolean isPasswordMatches = bcrypt.matches(oldpassword, user.getPassword());
-                if (isPasswordMatches)
-                {
+                if (isPasswordMatches) {
                     user.setPassword(passwordEncoder.encode(newpassword));
                     userRepository.save(user);
-                    map.put(ResponseMessage.STATUS,ResponseMessage.SUCCESS_API_CODE);
-                    map.put(ResponseMessage.MESSAGE,ResponseMessage.PASSWORD_EDIT_SUCCESS);
-                    map.put(ResponseMessage.DATA,new ArrayList<>());
-                }
-                else {
-                    map.put(ResponseMessage.STATUS,ResponseMessage.FAIL_API_CODE);
-                    map.put(ResponseMessage.MESSAGE,ResponseMessage.OLD_PASSWORD_DOES_NOT_MATCHED);
-                    map.put(ResponseMessage.DATA,new ArrayList<>());
+                    map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
+                    map.put(ResponseMessage.MESSAGE, ResponseMessage.PASSWORD_EDIT_SUCCESS);
+                    map.put(ResponseMessage.DATA, new ArrayList<>());
+                } else {
+                    map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
+                    map.put(ResponseMessage.MESSAGE, ResponseMessage.OLD_PASSWORD_DOES_NOT_MATCHED);
+                    map.put(ResponseMessage.DATA, new ArrayList<>());
                 }
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             logger.error("Problem occured while resetPasswordfromOldPassword , Please check logs : " + e.getMessage());
-            map.put(ResponseMessage.STATUS,ResponseMessage.FAIL_API_CODE);
-            map.put(ResponseMessage.MESSAGE,ResponseMessage.SOMETING_WENT_WRONG);
-            map.put(ResponseMessage.DATA,new ArrayList<>());
+            map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
+            map.put(ResponseMessage.MESSAGE, ResponseMessage.SOMETING_WENT_WRONG);
+            map.put(ResponseMessage.DATA, new ArrayList<>());
         }
         return map;
     }
 
     @Override
-    public List<UserEntity> search(String Text) {
-        List<UserEntity> data=userRepository.search(Text);
-        return data;
+    public Map<String, Object> search(String Text) {
+//        List<UserEntity> data = userRepository.search(Text);
+//        return data;
+
+        Map<String, Object> map = new HashMap<>();
+        if (!Text.isBlank()) {
+            List<UserEntity> data = userRepository.search(Text);
+            if (!data.isEmpty()) {
+                map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
+                map.put(ResponseMessage.MESSAGE, ResponseMessage.SUCCESS_SEARCH);
+                map.put(ResponseMessage.DATA, data);
+            } else {
+                map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
+                map.put(ResponseMessage.MESSAGE, ResponseMessage.FAIL_SEARCH);
+                map.put(ResponseMessage.DATA, new ArrayList<>());
+            }
+        }
+        else
+        {
+            map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
+            map.put(ResponseMessage.MESSAGE, ResponseMessage.FAIL_SEARCH_TEXT_NOT);
+            map.put(ResponseMessage.DATA, new ArrayList<>());
+        }
+        return map;
+    }
+
+    @Override
+    public List<UserEntity> listAll() {
+        return userRepository.findAll(Sort.by("email").ascending());
     }
 
 
