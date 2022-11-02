@@ -21,4 +21,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Query("SELECT u FROM UserEntity u where " + "u.mobileno LIKE CONCAT('%',:Text,'%')" + "Or u.email LIKE CONCAT('%',:Text,'%')" + "Or u.createdDateTime LIKE CONCAT('%',:Text,'%')")
     List<UserEntity> search(String Text);
 
+    @Query("SELECT u from UserEntity u WHERE isVerified = false")
+    List<UserEntity> getInActiveUser();
 }

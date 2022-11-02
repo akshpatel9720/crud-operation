@@ -23,15 +23,23 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public PasswordEncoder passwordEncoder;
 
-    public Map<String, Object> getAllUser(String authToken) {
+    public UserServiceImpl(UserRepository userRepository) {
+    }
+
+    public Map<String, Object> getAllUser() {
 
         Map<String, Object> map = new HashMap<>();
         List<UserEntity> userEntities = userRepository.findAll();
 
-        map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
-        map.put(ResponseMessage.MESSAGE, ResponseMessage.SUCCESS_MESSAGE_GET);
-        map.put(ResponseMessage.DATA, userEntities);
-
+        if (!userEntities.isEmpty()) {
+            map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
+            map.put(ResponseMessage.MESSAGE, ResponseMessage.SUCCESS_MESSAGE_GET);
+            map.put(ResponseMessage.DATA, userEntities);
+        } else {
+            map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
+            map.put(ResponseMessage.MESSAGE, ResponseMessage.FAIL_MESSAGE_GET);
+            map.put(ResponseMessage.DATA, new ArrayList<>());
+        }
         return map;
     }
 
@@ -40,7 +48,6 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> user1 = userRepository.findById(id);
 
         if (user1.isPresent()) {
-
             map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
             map.put(ResponseMessage.MESSAGE, ResponseMessage.SUCCESS_MESSAGE_GET);
             map.put(ResponseMessage.DATA, user1);
@@ -123,19 +130,17 @@ public class UserServiceImpl implements UserService {
 
         Map<String, Object> map = new HashMap<>();
         if (!Text.isBlank()) {
-            List<UserEntity> data = userRepository.search(Text);
-            if (!data.isEmpty()) {
+            List<UserEntity> searchdata = userRepository.search(Text);
+            if (!searchdata.isEmpty()) {
                 map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
                 map.put(ResponseMessage.MESSAGE, ResponseMessage.SUCCESS_SEARCH);
-                map.put(ResponseMessage.DATA, data);
+                map.put(ResponseMessage.DATA, searchdata);
             } else {
                 map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
                 map.put(ResponseMessage.MESSAGE, ResponseMessage.FAIL_SEARCH);
                 map.put(ResponseMessage.DATA, new ArrayList<>());
             }
-        }
-        else
-        {
+        } else {
             map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
             map.put(ResponseMessage.MESSAGE, ResponseMessage.FAIL_SEARCH_TEXT_NOT);
             map.put(ResponseMessage.DATA, new ArrayList<>());

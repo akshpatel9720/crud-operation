@@ -45,7 +45,7 @@ public class UserConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests().antMatchers("/save").permitAll().antMatchers("/authenticate").permitAll()
-                .antMatchers("/register/*").permitAll().antMatchers("/verifyAccount").permitAll().antMatchers("/meeting/validateRoom").permitAll()
+                .antMatchers("/register/*").permitAll().antMatchers("/user/export/excel").permitAll().antMatchers("/verifyAccount").permitAll().antMatchers("/meeting/validateRoom").permitAll()
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and().
                 addFilterBefore(new CustomCorsFilter(), ChannelProcessingFilter.class).

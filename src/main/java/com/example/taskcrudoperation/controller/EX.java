@@ -22,8 +22,8 @@ public class EX {
 //        pairs.values().removeAll(Collections.singleton(null));
 //        System.out.println("Pairs are" + pairs);
 
-        String s = "hardik aksh sahil";
-        Set<String> set = new HashSet<>();
+//        String s = "hardik aksh sahil";
+//        Set<String> set = new HashSet<>();
 
 
 //        String a[] = s.split(" ");
@@ -32,7 +32,33 @@ public class EX {
 //            System.out.println(s1);
 //        }
 //        System.out.println(set);
-}
+
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
+        Map<String, Object> map2 = new HashMap<>();
+
+        map.put("seriesId", "pqn");
+        map.put("JonerVn", "xyz");
+        map.put("testVn", 123);
+        map.put("seasonId", "abc");
+        map.put("abc", 123);
+        map.put("xyz", 123);
+
+//        map1 = map.entrySet().stream().filter(p -> p.getKey().contains("Id") || p.getKey().contains("Vn")).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+//        System.out.println(map1);
+
+        String s = (String) map.get("seriesId");
+        System.out.println(s);
+
+        Set<Integer> set = new HashSet<Integer>();
+        set.add(10);
+        set.add(0);
+        set.add(30);
+        set.add(40);
+
+
+
+    }
 }
 
 

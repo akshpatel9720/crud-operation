@@ -1,6 +1,7 @@
 package com.example.taskcrudoperation.controller;
 
 import com.example.taskcrudoperation.Service.RegistrationService;
+import com.example.taskcrudoperation.exception.UserException;
 import com.example.taskcrudoperation.model.UserEntity;
 import com.example.taskcrudoperation.repository.UserRepository;
 import org.slf4j.Logger;
@@ -21,6 +22,11 @@ public class RegistrationController {
     public RegistrationService registrationService;
 
 
+    @RequestMapping("/")
+    public @ResponseBody String greeting() {
+        return "Hello, World";
+    }
+
     @GetMapping("/verifyAccount")
     public ResponseEntity<Map<String, Object>> verifyAccount(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {
@@ -29,7 +35,8 @@ public class RegistrationController {
 
         } catch (Exception e) {
             logger.error("Error occured while registering user {} :Reason :{}");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new UserException.VerifyAccountHandler("verify account is not exist");
         }
     }
 
@@ -41,9 +48,9 @@ public class RegistrationController {
             return new ResponseEntity<>(registrationService.save(userEntity), HttpStatus.OK);
         } catch (Exception e) {
             logger.error(" Error occured while save user ");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new UserException.HandleException("email already exist!");
         }
-
     }
 
     @GetMapping("/forgetPassword")
@@ -51,10 +58,10 @@ public class RegistrationController {
         try {
             logger.info("inside forgetPassword() " + email);
             return new ResponseEntity<>(registrationService.forgetPassword(email), HttpStatus.OK);
-
         } catch (Exception e) {
             logger.error("Error occured while registering user {} :Reason :{}");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new UserException.ForgetPasswordHandler("password does not exist");
         }
     }
 
@@ -62,12 +69,10 @@ public class RegistrationController {
     public ResponseEntity<Map<String, Object>> resetPassword(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("oldPassword") String oldpassword) {
         try {
             return new ResponseEntity(registrationService.resetPassword(email, password, oldpassword), HttpStatus.OK);
-
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new UserException.ResetPasswordHandler("password does not exist");
         }
     }
-
-
 }
 

@@ -7,7 +7,7 @@ import java.util.Map;
 
 
 public interface UserService {
-    Map<String,Object> getAllUser(String authToken) ;
+    Map<String,Object> getAllUser() ;
 
     Map<String, Object> getById(int id);
     Map<String,Object> update(UserEntity userEntity);

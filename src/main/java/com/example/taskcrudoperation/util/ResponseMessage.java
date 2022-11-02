@@ -52,7 +52,7 @@ public class ResponseMessage
     public static final String SOMETING_WENT_WRONG = "Someting went wrong !";
     public static final String SAVE_SUCCESSFULLY = "Data Save Successfully";
 
-    public static final String EMAIL_IS_NULL_OR_PRESENT ="Email is Null or present ";
+    public static final String EMAIL_IS_NULL_OR_PRESENT ="Email is already exist ";
     public static final String USER_ENTITY_NULL = "User Entity is null ";
     public static final String FAIL_MESSSAGE_UPDATE ="please enter valid id for update";
     public static final String SUCCESS_SEARCH = "Data Search Successfully";
