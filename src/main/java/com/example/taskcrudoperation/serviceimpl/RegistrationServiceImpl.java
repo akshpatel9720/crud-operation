@@ -3,11 +3,10 @@ package com.example.taskcrudoperation.serviceimpl;
 
 import com.example.taskcrudoperation.Service.EmailService;
 import com.example.taskcrudoperation.Service.RegistrationService;
-import com.example.taskcrudoperation.exception.UserException;
 import com.example.taskcrudoperation.model.UserEntity;
 import com.example.taskcrudoperation.repository.UserRepository;
 import com.example.taskcrudoperation.util.ResponseMessage;
-import org.apache.catalina.User;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-import java.lang.reflect.ReflectPermission;
 import java.util.*;
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
-    public static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
+    public static final Logger logger = LoggerFactory.getLogger(RegistrationServiceImpl.class);
 
     @Autowired
     public UserRepository userRepository;
@@ -37,7 +35,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (userEntity != null) {
             logger.info("User Entity is not null");
             Optional<UserEntity> user = userRepository.findOneByEmailIgnoreCase(userEntity.getEmail());
-            if (user != null && !user.isPresent()) {
+            if (!user.isPresent()) {
                 logger.info("email id is not present ");
                 userEntity.setVerified(false);
                 userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
@@ -52,8 +50,6 @@ public class RegistrationServiceImpl implements RegistrationService {
                 map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
                 map.put(ResponseMessage.MESSAGE, ResponseMessage.EMAIL_IS_NULL_OR_PRESENT);
                 map.put(ResponseMessage.DATA, new ArrayList<>());
-//
-//                throw new UserException.UserEmailException("email already exist!");
 
             }
 
@@ -147,9 +143,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 //        test.put(word, meaning);
 //    }
 
-    public Map<String,String> saveTest=new HashMap<>();
-    public void savetest(String name,String fullname){
-        saveTest.put(name,fullname);
+
+    public void savetest(String name, String fullname) {
+        Map<String, String> saveTest = new HashMap<>();
+        saveTest.put(name, fullname);
     }
 
 }

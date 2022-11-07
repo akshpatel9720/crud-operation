@@ -47,7 +47,7 @@ public class ResponseMessage
     public static final String USER_NOT_FOUND="User not found ";
 
     public static final String PASSWORD_EDIT_SUCCESS = "Password editied Successfully";
-    public static final String OLD_PASSWORD_DOES_NOT_MATCHED = "PAssword Does not match";
+    public static final String OLD_PASSWORD_DOES_NOT_MATCHED = "Password Does not match";
 
     public static final String SOMETING_WENT_WRONG = "Someting went wrong !";
     public static final String SAVE_SUCCESSFULLY = "Data Save Successfully";

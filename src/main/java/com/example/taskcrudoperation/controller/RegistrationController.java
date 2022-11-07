@@ -3,14 +3,12 @@ package com.example.taskcrudoperation.controller;
 import com.example.taskcrudoperation.Service.RegistrationService;
 import com.example.taskcrudoperation.exception.UserException;
 import com.example.taskcrudoperation.model.UserEntity;
-import com.example.taskcrudoperation.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 

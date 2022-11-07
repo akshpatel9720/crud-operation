@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> userEntity = userRepository.findById(id);
         Map<String, Object> map = new HashMap<>();
         try {
-            if (userEntity != null) {
+            if (userEntity.isPresent()) {
                 UserEntity user = userEntity.get();
                 BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
                 boolean isPasswordMatches = bcrypt.matches(oldpassword, user.getPassword());
@@ -124,13 +124,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> search(String Text) {
-//        List<UserEntity> data = userRepository.search(Text);
-//        return data;
-
+    public Map<String, Object> search(String SearchData) {
         Map<String, Object> map = new HashMap<>();
-        if (!Text.isBlank()) {
-            List<UserEntity> searchdata = userRepository.search(Text);
+        if (!SearchData.isBlank()) {
+            List<UserEntity> searchdata = userRepository.search(SearchData);
             if (!searchdata.isEmpty()) {
                 map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
                 map.put(ResponseMessage.MESSAGE, ResponseMessage.SUCCESS_SEARCH);
@@ -151,6 +148,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> listAll() {
         return userRepository.findAll(Sort.by("email").ascending());
+
     }
 
 
