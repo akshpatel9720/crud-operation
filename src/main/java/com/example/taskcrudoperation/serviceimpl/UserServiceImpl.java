@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
         } catch (Exception e) {
-            LOGGER.error("Problem Occured While ResetPasswordFromOldPassword , Please Check logs : "+e.getMessage());
+            LOGGER.error("Problem Occured While ResetPasswordFromOldPassword , Please Check logs : " + e.getMessage());
             map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
             map.put(ResponseMessage.MESSAGE, ResponseMessage.SOMETING_WENT_WRONG);
             map.put(ResponseMessage.DATA, new ArrayList<>());
@@ -152,6 +152,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(Sort.by("email").ascending());
 
     }
-
-
 }
