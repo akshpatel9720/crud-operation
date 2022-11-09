@@ -2,14 +2,13 @@ package com.example.taskcrudoperation.schedular;
 
 import com.example.taskcrudoperation.model.UserEntity;
 import com.example.taskcrudoperation.repository.UserRepository;
-import org.apache.catalina.LifecycleState;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +41,7 @@ public class LoginSchedular {
                 }
             }
         } catch (Exception e) {
-            logger.info("inside Catch block");
+            logger.info("Inside Catch block");
             e.printStackTrace();
         }
     }

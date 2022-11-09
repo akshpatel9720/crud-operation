@@ -15,7 +15,6 @@ public interface RegistrationService {
 
     public Map<String, Object> resetPassword(String email, String password, String oldpassword);
 
-//    public void add(String word,String meaning);
-    public void savetest(String name,String fullname);
+    public void savetest(String name, String fullname);
 
 }

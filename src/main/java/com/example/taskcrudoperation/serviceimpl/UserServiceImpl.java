@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
+
 @Service
 public class UserServiceImpl implements UserService {
     public static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -115,7 +117,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
         } catch (Exception e) {
-            logger.error("Problem occured while resetPasswordfromOldPassword , Please check logs : " + e.getMessage());
+            LOGGER.error("Problem Occured While ResetPasswordFromOldPassword , Please Check logs : "+e.getMessage());
             map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
             map.put(ResponseMessage.MESSAGE, ResponseMessage.SOMETING_WENT_WRONG);
             map.put(ResponseMessage.DATA, new ArrayList<>());
@@ -124,10 +126,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> search(String SearchData) {
+    public Map<String, Object> search(String Text) {
         Map<String, Object> map = new HashMap<>();
-        if (!SearchData.isBlank()) {
-            List<UserEntity> searchdata = userRepository.search(SearchData);
+        if (!Text.isBlank()) {
+            List<UserEntity> searchdata = userRepository.search(Text);
             if (!searchdata.isEmpty()) {
                 map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
                 map.put(ResponseMessage.MESSAGE, ResponseMessage.SUCCESS_SEARCH);

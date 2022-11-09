@@ -39,10 +39,10 @@ public class JwtAuthenticationController {
     }
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
-            throws Exception {
+    public ResponseEntity<Map<String, Object>> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> mapResponse = new HashMap<String, Object>();
+
         Map<String, Object> mapResponseUserData = new HashMap<String, Object>();
         try {
             authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -60,10 +60,9 @@ public class JwtAuthenticationController {
                 mapResponseUserData.put("id", userData.getId().toString());
                 mapResponseUserData.put("email", userData.getEmail());
                 mapResponseUserData.put("token", token);
-                map.put("RESPONSE_STATUS", "200");
+                map.put(ResponseMessage.STATUS, ResponseMessage.SUCCESS_API_CODE);
                 map.put("RESPONSE_MESSAGE", "LOGIN SUCESS!");
                 map.put("RESPONSE_DATA", mapResponseUserData);
-
             }
             return ResponseEntity.ok(map);
         } catch (Exception e) {

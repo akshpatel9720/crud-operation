@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -30,6 +32,7 @@ public class UserController {
             return new ResponseEntity<>(userService.getAllUser(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("error occur while getAllUser() " + e.getMessage());
+
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
             throw new UserException.AllUserHandle("All uses does not fetch");
         }
@@ -54,7 +57,6 @@ public class UserController {
             return new ResponseEntity<>(userService.update(userEntity), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("error occur while update() " + e.getMessage());
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
             throw new UserException.UpdateHandler("data is not update");
         }
     }

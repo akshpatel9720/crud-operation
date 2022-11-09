@@ -17,8 +17,9 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
-import java.util.HashMap;
-import java.util.Map;
+
+import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
+
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -56,7 +57,7 @@ public class EmailServiceImpl implements EmailService {
 
             logger.info("Mail sent successfully to newly created user {} - verify ", userEntity.getEmail());
         } catch (Exception e) {
-            logger.error("Problem occured while sending mail , Please check logs : " + e.getMessage());
+            LOGGER.error("Problem occured while sending mail, please Check Logs : "+e.getMessage());
         }
     }
 
@@ -69,7 +70,7 @@ public class EmailServiceImpl implements EmailService {
             MimeMessage message = new MimeMessage(session);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(userEntity.getEmail()));
             message.setSubject("Reset password");
-            String process=ResponseMessage.URl+"/register/resetPassword?oldPassword="+userEntity.getPassword() +"&email="+userEntity.getEmail();
+            String process = ResponseMessage.URl + "/register/resetPassword?oldPassword=" + userEntity.getPassword() + "&email=" + userEntity.getEmail();
             Multipart multipart = new MimeMultipart();
             BodyPart msg = new MimeBodyPart();
             msg.setDataHandler(new DataHandler(new ByteArrayDataSource(process, "text/html; charset=\"utf-8\"")));
@@ -79,7 +80,7 @@ public class EmailServiceImpl implements EmailService {
             Transport.send(message);
             logger.info("Mail sent successfully to forgetPassword{} - Reset", userEntity.getEmail());
         } catch (Exception e) {
-            logger.error("Problem occured while sending mail , Please check logs : " + e.getMessage());
+            LOGGER.info("Problem occured while sending mail , Please check logs : " + e.getMessage());
         }
     }
 }

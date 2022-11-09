@@ -35,6 +35,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (userEntity != null) {
             logger.info("User Entity is not null");
             Optional<UserEntity> user = userRepository.findOneByEmailIgnoreCase(userEntity.getEmail());
+
             if (!user.isPresent()) {
                 logger.info("email id is not present ");
                 userEntity.setVerified(false);
@@ -50,16 +51,13 @@ public class RegistrationServiceImpl implements RegistrationService {
                 map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
                 map.put(ResponseMessage.MESSAGE, ResponseMessage.EMAIL_IS_NULL_OR_PRESENT);
                 map.put(ResponseMessage.DATA, new ArrayList<>());
-
             }
-
         } else {
             logger.info("User entity is null ");
             map.put(ResponseMessage.STATUS, ResponseMessage.FAIL_API_CODE);
             map.put(ResponseMessage.MESSAGE, ResponseMessage.USER_ENTITY_NULL);
             map.put(ResponseMessage.DATA, new ArrayList<>());
         }
-
         return map;
     }
 
@@ -134,14 +132,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         }
         return map;
     }
-
-
-//    private Map<String, String> test = new HashMap<>();
-//
-//
-//    public void add(String word, String meaning) {
-//        test.put(word, meaning);
-//    }
 
 
     public void savetest(String name, String fullname) {

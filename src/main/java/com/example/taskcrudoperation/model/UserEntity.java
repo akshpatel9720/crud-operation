@@ -4,29 +4,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer id;
     public String email;
-
     public String password;
     public Long mobileno;
     public Integer age;
-
     private Boolean isVerified;
-
     public String gender;
-
     public String address;
-
-
     public Date createdDateTime;
-
     public Date UpdateDateTime;
 
     public UserEntity() {
