@@ -144,9 +144,7 @@ class TaskCrudOperationApplicationTests {
         exceptedData.put(ResponseMessage.MESSAGE, ResponseMessage.SUCCESS_SEARCH);
         exceptedData.put(ResponseMessage.DATA, searchdata);
         assertNotEquals(searchdata, exceptedData);
-
     }
-
 
 
 //    @Test
@@ -161,21 +159,20 @@ class TaskCrudOperationApplicationTests {
 //    }
 
     @Test
-    public void testTest() throws Exception{
-        RegistrationServiceImpl registrationService1=mock(RegistrationServiceImpl.class);
-        doNothing().when(registrationService1).savetest(anyString(),anyString());
-        registrationService1.savetest("aksh","aksh patel");
-        verify(registrationService1,times(1)).savetest("aksh","aksh patel");
+    public void testTest() throws Exception {
+        RegistrationServiceImpl registrationService1 = mock(RegistrationServiceImpl.class);
+        doNothing().when(registrationService1).savetest(anyString(), anyString());
+        registrationService1.savetest("aksh", "aksh patel");
+        verify(registrationService1, times(1)).savetest("aksh", "aksh patel");
     }
 
 
     @Test
-    public void testTest1()  throws Exception{
-        RegistrationServiceImpl registrationService1=mock(RegistrationServiceImpl.class);
-        ArgumentCaptor<String> captor=ArgumentCaptor.forClass(String.class);
-        doNothing().when(registrationService1).savetest(anyString(),captor.capture());
-        registrationService1.savetest("aksh","aksh patel");
-        assertEquals("aksh patel",captor.getValue());
-
+    public void testTest1() throws Exception {
+        RegistrationServiceImpl registrationService1 = mock(RegistrationServiceImpl.class);
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        doNothing().when(registrationService1).savetest(anyString(), captor.capture());
+        registrationService1.savetest("aksh", "aksh patel");
+        assertEquals("aksh patel", captor.getValue());
     }
 }
