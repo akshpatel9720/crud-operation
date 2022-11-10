@@ -65,21 +65,21 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = UserException.DeleteHandler.class)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public ExceptionDTO handleDeleteException(UserException.DeleteHandler deleteHandler){
+    public ExceptionDTO handleDeleteException(UserException.DeleteHandler deleteHandler) {
         return new ExceptionDTO(false, deleteHandler.getMessage());
     }
 
-    @ExceptionHandler(value =UserException.ResetPasswordFromOldHandler.class)
+    @ExceptionHandler(value = UserException.ResetPasswordFromOldHandler.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ExceptionDTO handleResetFromOldException(UserException.ResetPasswordFromOldHandler resetPasswordFromOldHandler){
+    public ExceptionDTO handleResetFromOldException(UserException.ResetPasswordFromOldHandler resetPasswordFromOldHandler) {
         return new ExceptionDTO(false, resetPasswordFromOldHandler.getMessage());
     }
 
     @ExceptionHandler(value = UserException.SearchHandler.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ExceptionDTO handleSearchException(UserException.SearchHandler searchHandler){
+    public ExceptionDTO handleSearchException(UserException.SearchHandler searchHandler) {
         return new ExceptionDTO(false, searchHandler.getMessage());
     }
 }
